@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Москаленко Роман - Врач акушер-гинеколог</title>
+    <style>
+        /* ===== ОБНУЛЕНИЕ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* ===== ГЛАВНЫЙ КОНТЕЙНЕР ===== */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(30, 46, 78, 0.12);
+            padding: 40px 35px;
+            transition: 0.3s;
+        }
+
+        /* ============================================ */
+        /* БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото + Заголовок)     */
+        /* ============================================ */
+        .header-grid {
+            display: flex;
+            align-items: center;
+            gap: 45px;
+            margin-bottom: 40px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid #eef3f9;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .header-text h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1a2a44;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .header-text .subtitle {
+            font-size: 22px;
+            color: #2679b5;
+            font-weight: 500;
+        }
+
+        .header-text .badge {
+            display: inline-block;
+            margin-top: 12px;
+            background: #e9f0f9;
+            color: #1a2a44;
+            padding: 6px 22px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ===== ФОТО ===== */
+        .header-photo {
+            flex-shrink: 0;
+            width: 250px;
+            height: 250px;
+            border-radius: 30px;
+            background: #d9e2ef center center / cover no-repeat;
+            box-shadow: 0 15px 35px rgba(38, 121, 181, 0.2);
+            border: 4px solid white;
+            transition: 0.3s;
+        }
+
+        /* ============================================ */
+        /* БЛОК 2: СПЕЦИАЛИЗАЦИЯ                       */
+        /* ============================================ */
+        .spec-section {
+            margin-bottom: 40px;
+        }
+
+        .spec-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .spec-grid {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .spec-item {
+            background: #f0f5fe;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a2a44;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .spec-item:hover {
+            background: #2679b5;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(38, 121, 181, 0.3);
+        }
+
+        /* ============================================ */
+        /* БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                 */
+        /* ============================================ */
+        .exp-section {
+            background: #f8faff;
+            border-radius: 25px;
+            padding: 30px 35px;
+            margin-bottom: 40px;
+            border-left: 6px solid #2679b5;
+        }
+
+        .exp-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .exp-item {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            font-size: 16px;
+            color: #1f2b3e;
+            line-height: 1.6;
+        }
+
+        .exp-item strong {
+            min-width: 140px;
+            color: #2679b5;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .exp-item .highlight {
+            background: #e3edf9;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            color: #004080;
+        }
+
+        /* ============================================ */
+        /* БЛОК 4: МОЙ ПОДХОД                          */
+        /* ============================================ */
+        .approach-section {
+            background: #ffffff;
+            border-radius: 25px;
+            padding: 30px 35px;
+            box-shadow: inset 0 0 0 1px #e6edf6;
+        }
+
+        .approach-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2a44;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .approach-text {
+            font-size: 16.5px;
+            line-height: 1.9;
+            color: #1f2b3e;
+        }
+
+        .approach-text p {
+            margin-bottom: 16px;
+        }
+
+        .approach-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .approach-text .italic-note {
+            font-style: italic;
+            color: #2679b5;
+            font-weight: 500;
+            border-left: 4px solid #2679b5;
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        /* ============================================ */
+        /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ =====           */
+        /* ============================================ */
+
+        /* Планшеты и маленькие ноутбуки */
+        @media (max-width: 900px) {
+            .container {
+                padding: 30px 25px;
+            }
+            .header-text h1 {
+                font-size: 34px;
+            }
+            .header-photo {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* ТЕЛЕФОНЫ (ширина меньше 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 10px;
+            }
+
+            .container {
+                padding: 25px 18px;
+                border-radius: 24px;
+            }
+
+            /* Фото становится сверху, круглым и меньше */
+            .header-grid {
+                flex-direction: column-reverse;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+                padding-bottom: 25px;
+                margin-bottom: 30px;
+            }
+
+            .header-text h1 {
+                font-size: 28px;
+            }
+
+            .header-text .subtitle {
+                font-size: 18px;
+            }
+
+            .header-text .badge {
+                font-size: 13px;
+                padding: 5px 18px;
+            }
+
+            .header-photo {
+                width: 160px;
+                height: 160px;
+                border-radius: 50%;  /* Круглое фото на телефоне */
+                box-shadow: 0 10px 25px rgba(38, 121, 181, 0.2);
+            }
+
+            /* Специализация — в столбик или компактно */
+            .spec-grid {
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .spec-item {
+                padding: 10px 22px;
+                font-size: 15px;
+                width: auto;
+            }
+
+            /* Блок опыта */
+            .exp-section {
+                padding: 22px 18px;
+                border-left-width: 4px;
+            }
+
+            .exp-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3px;
+                font-size: 15px;
+            }
+
+            .exp-item strong {
+                min-width: auto;
+                font-size: 15px;
+            }
+
+            /* Блок подхода */
+            .approach-section {
+                padding: 22px 18px;
+            }
+
+            .approach-text {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+            .approach-text .italic-note {
+                padding-left: 14px;
+                font-size: 15px;
+            }
+        }
+
+        /* ОЧЕНЬ МАЛЕНЬКИЕ ТЕЛЕФОНЫ (до 400px) */
+        @media (max-width: 420px) {
+            .container {
+                padding: 18px 12px;
+                border-radius: 20px;
+            }
+
+            .header-text h1 {
+                font-size: 22px;
+            }
+
+            .header-text .subtitle {
+                font-size: 16px;
+            }
+
+            .header-photo {
+                width: 130px;
+                height: 130px;
+            }
+
+            .spec-item {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+
+            .exp-item {
+                font-size: 14px;
+            }
+
+            .approach-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ========================================== -->
+    <!-- БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото справа)        -->
+    <!-- ========================================== -->
+    <div class="header-grid">
+        <div class="header-text">
+            <h1>Москаленко Роман Владимирович</h1>
+            <div class="subtitle">Врач акушер-гинеколог, онколог</div>
+            <span class="badge">⭐ Стаж с 1997 года</span>
+        </div>
+        <div class="header-photo" 
+             style="background-image: url('roman.jpg');">
+             <!-- ⬆️ ЗАМЕНИ 'ваше_фото.jpg' НА СВОЙ ФАЙЛ -->
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- БЛОК 2: СПЕЦИАЛИЗАЦИЯ                      -->
+    <!-- ========================================== -->
+    <div class="spec-section">
+        <div class="spec-title">▶ Специализация</div>
+        <div class="spec-grid">
+            <span class="spec-item">Гинекология</span>
+            <span class="spec-item">Хирургия</span>
+            <span class="spec-item">Онкология</span>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                -->
+    <!-- ========================================== -->
+    <div class="exp-section">
+        <h3>▶ Опыт и квалификация</h3>
+        <div class="exp-list">
+            <div class="exp-item">
+                <strong>Стаж:</strong>
+                <span>С 1997 года по настоящее время — <span class="highlight">ГКБ им. С. П. Боткина</span></span>
+            </div>
+            <div class="exp-item">
+                <strong>Образование:</strong>
+                <span>Новосибирский государственный медицинский институт</span>
+            </div>
+            <div class="exp-item">
+                <strong>Спец. подготовка:</strong>
+                <span>Ординатура по акушерству и гинекологии (г. Москва); Академия последипломного образования (кафедра под рук. профессора Бакулевой Л. П.)</span>
+            </div>
+            <div class="exp-item">
+                <strong>Международный опыт:</strong>
+                <span>Стажировка во Франции (г. Клермон-Ферран), клиника CICE, под руководством профессора Бочоришвили Р. Г.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- БЛОК 4: МОЙ ПОДХОД                         -->
+    <!-- ========================================== -->
+    <div class="approach-section">
+        <h3>▶ Мой подход</h3>
+        <div class="approach-text">
+            <p>
+                Как врач и как человек, я глубоко понимаю деликатность вопросов, с которыми сталкиваются мои пациенты. 
+                Мой многолетний опыт и принципы медицинской этики диктуют одно главное правило: <strong>предельная осторожность и чуткость</strong>.
+            </p>
+            <p>
+                Я сознательно не использую на сайте сложную медицинскую терминологию, которая может вызвать тревогу. 
+                Моя задача — обеспечить всеобъемлющую помощь, опираясь на современные технологии и достижения медицины, 
+                сохраняя при этом комфортную атмосферу для пациента.
+            </p>
+            <p class="italic-note">
+                «Все важные детали, нюансы диагноза и план лечения — это то, что должно оставаться в пространстве доверия 
+                между врачом и пациентом. Мы обсудим всё необходимое лично, на приёме или в удобном для вас формате общения».
+            </p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
