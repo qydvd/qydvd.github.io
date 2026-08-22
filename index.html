@@ -20,6 +20,42 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ФОНОВЫЕ ЧАСТИЦЫ ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatParticle var(--duration, 12s) infinite ease-in-out;
+            opacity: 0.2;
+        }
+
+        .particle:nth-child(1) { left: 10%; width: 8px; height: 8px; --duration: 14s; animation-delay: 0s; background: #2679b5; }
+        .particle:nth-child(2) { left: 25%; width: 6px; height: 6px; --duration: 10s; animation-delay: 2s; background: #5ba3e6; }
+        .particle:nth-child(3) { left: 45%; width: 12px; height: 12px; --duration: 16s; animation-delay: 4s; background: #2679b5; opacity: 0.1; }
+        .particle:nth-child(4) { left: 65%; width: 7px; height: 7px; --duration: 12s; animation-delay: 1s; background: #4A90D9; }
+        .particle:nth-child(5) { left: 80%; width: 9px; height: 9px; --duration: 18s; animation-delay: 3s; background: #2679b5; }
+        .particle:nth-child(6) { left: 92%; width: 5px; height: 5px; --duration: 11s; animation-delay: 5s; background: #5ba3e6; opacity: 0.3; }
+        .particle:nth-child(7) { left: 50%; width: 14px; height: 14px; --duration: 15s; animation-delay: 2.5s; background: #2679b5; opacity: 0.05; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            25% { transform: translateY(-80px) scale(1.3); opacity: 0.6; }
+            50% { transform: translateY(-160px) scale(0.8); opacity: 0.2; }
+            75% { transform: translateY(-80px) scale(1.1); opacity: 0.5; }
         }
 
         /* ===== ГЛАВНЫЙ КОНТЕЙНЕР ===== */
@@ -31,6 +67,15 @@
             box-shadow: 0 20px 60px rgba(30, 46, 78, 0.12);
             padding: 40px 35px;
             transition: 0.3s;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: containerAppear 0.8s ease forwards;
+        }
+
+        @keyframes containerAppear {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* ============================================ */
@@ -43,6 +88,13 @@
             margin-bottom: 40px;
             padding-bottom: 35px;
             border-bottom: 2px solid #eef3f9;
+            opacity: 0;
+            animation: headerAppear 0.8s ease 0.2s forwards;
+        }
+
+        @keyframes headerAppear {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
         .header-text {
@@ -55,6 +107,20 @@
             color: #1a2a44;
             line-height: 1.2;
             margin-bottom: 6px;
+        }
+
+        .header-text h1 span {
+            background: linear-gradient(90deg, #1a2a44, #2679b5, #1a2a44, #2679b5);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerName 5s linear infinite;
+        }
+
+        @keyframes shimmerName {
+            0% { background-position: 0% 0; }
+            100% { background-position: 300% 0; }
         }
 
         .header-text .subtitle {
@@ -72,6 +138,12 @@
             border-radius: 30px;
             font-size: 14px;
             font-weight: 600;
+            animation: badgePulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); background: #e9f0f9; }
+            50% { transform: scale(1.04); background: #d4e4fa; }
         }
 
         /* ===== ФОТО ===== */
@@ -83,7 +155,19 @@
             background: #d9e2ef center center / cover no-repeat;
             box-shadow: 0 15px 35px rgba(38, 121, 181, 0.2);
             border: 4px solid white;
-            transition: 0.3s;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            animation: floatPhoto 4s ease-in-out infinite;
+        }
+
+        @keyframes floatPhoto {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        .header-photo:hover {
+            transform: scale(1.03) rotate(-1deg);
+            box-shadow: 0 20px 50px rgba(38, 121, 181, 0.3);
+            animation-play-state: paused;
         }
 
         /* ============================================ */
@@ -116,14 +200,33 @@
             font-weight: 600;
             color: #1a2a44;
             border: 1px solid transparent;
-            transition: 0.2s;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .spec-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: specFloat 3s ease-in-out infinite;
+        }
+
+        .spec-item:nth-child(1) { animation-delay: 0s; }
+        .spec-item:nth-child(2) { animation-delay: 0.5s; }
+        .spec-item:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes specFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
         .spec-item:hover {
             background: #2679b5;
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(38, 121, 181, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(38, 121, 181, 0.35);
+            border-color: transparent;
+            animation-play-state: paused;
         }
 
         /* ============================================ */
@@ -135,6 +238,25 @@
             padding: 30px 35px;
             margin-bottom: 40px;
             border-left: 6px solid #2679b5;
+            transition: box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .exp-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: expGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes expGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(38, 121, 181, 0); }
+            50% { box-shadow: 0 0 30px 0 rgba(38, 121, 181, 0.05); }
+        }
+
+        .exp-section:hover {
+            box-shadow: 0 0 40px 5px rgba(38, 121, 181, 0.08);
+            animation-play-state: paused;
         }
 
         .exp-section h3 {
@@ -159,6 +281,33 @@
             font-size: 16px;
             color: #1f2b3e;
             line-height: 1.6;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: background 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .exp-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+            animation: itemGlow 3s ease-in-out infinite;
+        }
+
+        .exp-item:nth-child(1) { animation-delay: 0s; }
+        .exp-item:nth-child(2) { animation-delay: 0.4s; }
+        .exp-item:nth-child(3) { animation-delay: 0.8s; }
+        .exp-item:nth-child(4) { animation-delay: 1.2s; }
+
+        @keyframes itemGlow {
+            0%, 100% { background: transparent; }
+            50% { background: rgba(38, 121, 181, 0.03); }
+        }
+
+        .exp-item:hover {
+            background: rgba(38, 121, 181, 0.07);
+            transform: translateX(5px);
+            animation-play-state: paused;
         }
 
         .exp-item strong {
@@ -174,6 +323,13 @@
             border-radius: 20px;
             font-weight: 500;
             color: #004080;
+            transition: all 0.3s ease;
+        }
+
+        .exp-item .highlight:hover {
+            background: #2679b5;
+            color: white;
+            transform: scale(1.05);
         }
 
         /* ============================================ */
@@ -184,6 +340,20 @@
             border-radius: 25px;
             padding: 30px 35px;
             box-shadow: inset 0 0 0 1px #e6edf6;
+            transition: box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .approach-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: approachPulse 4.5s ease-in-out infinite;
+        }
+
+        @keyframes approachPulse {
+            0%, 100% { box-shadow: inset 0 0 0 1px #e6edf6; }
+            50% { box-shadow: inset 0 0 0 1px #c5d9f0, 0 0 35px rgba(38, 121, 181, 0.03); }
         }
 
         .approach-section h3 {
@@ -203,6 +373,14 @@
 
         .approach-text p {
             margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .approach-text p.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .approach-text p:last-child {
@@ -216,13 +394,18 @@
             border-left: 4px solid #2679b5;
             padding-left: 20px;
             margin-top: 8px;
+            animation: notePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes notePulse {
+            0%, 100% { border-left-color: #2679b5; }
+            50% { border-left-color: #5ba3e6; }
         }
 
         /* ============================================ */
         /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ =====           */
         /* ============================================ */
 
-        /* Планшеты и маленькие ноутбуки */
         @media (max-width: 900px) {
             .container {
                 padding: 30px 25px;
@@ -234,9 +417,11 @@
                 width: 200px;
                 height: 200px;
             }
+            .particles {
+                display: none;
+            }
         }
 
-        /* ТЕЛЕФОНЫ (ширина меньше 768px) */
         @media (max-width: 768px) {
             body {
                 padding: 12px 10px;
@@ -247,7 +432,6 @@
                 border-radius: 24px;
             }
 
-            /* Фото становится сверху, круглым и меньше */
             .header-grid {
                 flex-direction: column-reverse;
                 align-items: center;
@@ -273,11 +457,10 @@
             .header-photo {
                 width: 160px;
                 height: 160px;
-                border-radius: 50%;  /* Круглое фото на телефоне */
+                border-radius: 50%;
                 box-shadow: 0 10px 25px rgba(38, 121, 181, 0.2);
             }
 
-            /* Специализация — в столбик или компактно */
             .spec-grid {
                 justify-content: center;
                 gap: 10px;
@@ -289,7 +472,6 @@
                 width: auto;
             }
 
-            /* Блок опыта */
             .exp-section {
                 padding: 22px 18px;
                 border-left-width: 4px;
@@ -307,7 +489,6 @@
                 font-size: 15px;
             }
 
-            /* Блок подхода */
             .approach-section {
                 padding: 22px 18px;
             }
@@ -321,9 +502,12 @@
                 padding-left: 14px;
                 font-size: 15px;
             }
+
+            .particles {
+                display: none;
+            }
         }
 
-        /* ОЧЕНЬ МАЛЕНЬКИЕ ТЕЛЕФОНЫ (до 400px) */
         @media (max-width: 420px) {
             .container {
                 padding: 18px 12px;
@@ -360,83 +544,148 @@
 </head>
 <body>
 
-<div class="container">
+    <!-- ===== ФОНОВЫЕ ЧАСТИЦЫ ===== -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-    <!-- ========================================== -->
-    <!-- БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото справа)        -->
-    <!-- ========================================== -->
-    <div class="header-grid">
-        <div class="header-text">
-            <h1>Москаленко Роман Владимирович</h1>
-            <div class="subtitle">Врач акушер-гинеколог, онколог</div>
-            <span class="badge">⭐ Стаж с 1997 года</span>
+    <div class="container">
+
+        <!-- ========================================== -->
+        <!-- БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото справа)        -->
+        <!-- ========================================== -->
+        <div class="header-grid">
+            <div class="header-text">
+                <h1>Москаленко <span>Роман Владимирович</span></h1>
+                <div class="subtitle">Врач акушер-гинеколог, онколог</div>
+                <span class="badge">⭐ Стаж с 1997 года</span>
+            </div>
+            <div class="header-photo" 
+                 style="background-image: url('roman.jpg');">
+                 <!-- ⬆️ ЗАМЕНИ 'roman.jpg' НА СВОЙ ФАЙЛ -->
+            </div>
         </div>
-        <div class="header-photo" 
-             style="background-image: url('roman.jpg');">
-             <!-- ⬆️ ЗАМЕНИ 'ваше_фото.jpg' НА СВОЙ ФАЙЛ -->
+
+        <!-- ========================================== -->
+        <!-- БЛОК 2: СПЕЦИАЛИЗАЦИЯ                      -->
+        <!-- ========================================== -->
+        <div class="spec-section">
+            <div class="spec-title">▶ Специализация</div>
+            <div class="spec-grid">
+                <span class="spec-item" data-delay="0.1">Гинекология</span>
+                <span class="spec-item" data-delay="0.3">Хирургия</span>
+                <span class="spec-item" data-delay="0.5">Онкология</span>
+            </div>
         </div>
+
+        <!-- ========================================== -->
+        <!-- БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                -->
+        <!-- ========================================== -->
+        <div class="exp-section" id="experience">
+            <h3>▶ Опыт и квалификация</h3>
+            <div class="exp-list">
+                <div class="exp-item" data-delay="0.1">
+                    <strong>Стаж:</strong>
+                    <span>С 1997 года по настоящее время — <span class="highlight">ГКБ им. С. П. Боткина</span></span>
+                </div>
+                <div class="exp-item" data-delay="0.2">
+                    <strong>Образование:</strong>
+                    <span>Новосибирский государственный медицинский институт</span>
+                </div>
+                <div class="exp-item" data-delay="0.3">
+                    <strong>Спец. подготовка:</strong>
+                    <span>Ординатура по акушерству и гинекологии (г. Москва); Академия последипломного образования (кафедра под рук. профессора Бакулевой Л. П.)</span>
+                </div>
+                <div class="exp-item" data-delay="0.4">
+                    <strong>Международный опыт:</strong>
+                    <span>Стажировка во Франции (г. Клермон-Ферран), клиника CICE, под руководством профессора Бочоришвили Р. Г.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- БЛОК 4: МОЙ ПОДХОД                         -->
+        <!-- ========================================== -->
+        <div class="approach-section" id="approach">
+            <h3>▶ Мой подход</h3>
+            <div class="approach-text">
+                <p>
+                    Как врач и как человек, я глубоко понимаю деликатность вопросов, с которыми сталкиваются мои пациенты. 
+                    Мой многолетний опыт и принципы медицинской этики диктуют одно главное правило: <strong>предельная осторожность и чуткость</strong>.
+                </p>
+                <p>
+                    Я сознательно не использую на сайте сложную медицинскую терминологию, которая может вызвать тревогу. 
+                    Моя задача — обеспечить всеобъемлющую помощь, опираясь на современные технологии и достижения медицины, 
+                    сохраняя при этом комфортную атмосферу для пациента.
+                </p>
+                <p class="italic-note">
+                    «Все важные детали, нюансы диагноза и план лечения — это то, что должно оставаться в пространстве доверия 
+                    между врачом и пациентом. Мы обсудим всё необходимое лично, на приёме или в удобном для вас формате общения».
+                </p>
+            </div>
+        </div>
+
     </div>
 
     <!-- ========================================== -->
-    <!-- БЛОК 2: СПЕЦИАЛИЗАЦИЯ                      -->
+    <!-- ===== СКРИПТ ДЛЯ АНИМАЦИЙ ПРИ СКРОЛЛЕ ===== -->
     <!-- ========================================== -->
-    <div class="spec-section">
-        <div class="spec-title">▶ Специализация</div>
-        <div class="spec-grid">
-            <span class="spec-item">Гинекология</span>
-            <span class="spec-item">Хирургия</span>
-            <span class="spec-item">Онкология</span>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    <!-- ========================================== -->
-    <!-- БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                -->
-    <!-- ========================================== -->
-    <div class="exp-section">
-        <h3>▶ Опыт и квалификация</h3>
-        <div class="exp-list">
-            <div class="exp-item">
-                <strong>Стаж:</strong>
-                <span>С 1997 года по настоящее время — <span class="highlight">ГКБ им. С. П. Боткина</span></span>
-            </div>
-            <div class="exp-item">
-                <strong>Образование:</strong>
-                <span>Новосибирский государственный медицинский институт</span>
-            </div>
-            <div class="exp-item">
-                <strong>Спец. подготовка:</strong>
-                <span>Ординатура по акушерству и гинекологии (г. Москва); Академия последипломного образования (кафедра под рук. профессора Бакулевой Л. П.)</span>
-            </div>
-            <div class="exp-item">
-                <strong>Международный опыт:</strong>
-                <span>Стажировка во Франции (г. Клермон-Ферран), клиника CICE, под руководством профессора Бочоришвили Р. Г.</span>
-            </div>
-        </div>
-    </div>
+            function isElementInViewport(el) {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+                return rect.top <= windowHeight - 80;
+            }
 
-    <!-- ========================================== -->
-    <!-- БЛОК 4: МОЙ ПОДХОД                         -->
-    <!-- ========================================== -->
-    <div class="approach-section">
-        <h3>▶ Мой подход</h3>
-        <div class="approach-text">
-            <p>
-                Как врач и как человек, я глубоко понимаю деликатность вопросов, с которыми сталкиваются мои пациенты. 
-                Мой многолетний опыт и принципы медицинской этики диктуют одно главное правило: <strong>предельная осторожность и чуткость</strong>.
-            </p>
-            <p>
-                Я сознательно не использую на сайте сложную медицинскую терминологию, которая может вызвать тревогу. 
-                Моя задача — обеспечить всеобъемлющую помощь, опираясь на современные технологии и достижения медицины, 
-                сохраняя при этом комфортную атмосферу для пациента.
-            </p>
-            <p class="italic-note">
-                «Все важные детали, нюансы диагноза и план лечения — это то, что должно оставаться в пространстве доверия 
-                между врачом и пациентом. Мы обсудим всё необходимое лично, на приёме или в удобном для вас формате общения».
-            </p>
-        </div>
-    </div>
+            function animateOnScroll() {
+                // Специализация
+                document.querySelectorAll('.spec-item').forEach(function(el) {
+                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
 
-</div>
+                // Опыт
+                document.querySelectorAll('.exp-section').forEach(function(el) {
+                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
+
+                document.querySelectorAll('.exp-item').forEach(function(el) {
+                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
+
+                // Подход
+                document.querySelectorAll('.approach-section').forEach(function(el) {
+                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
+
+                document.querySelectorAll('.approach-text p').forEach(function(el) {
+                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('resize', animateOnScroll);
+
+        });
+    </script>
 
 </body>
 </html>
