@@ -1,691 +1,393 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Москаленко Роман - Врач акушер-гинеколог</title>
-    <style>
-        /* ===== ОБНУЛЕНИЕ ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: #f4f7fc;
-            padding: 20px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ===== ФОНОВЫЕ ЧАСТИЦЫ ===== */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatParticle var(--duration, 12s) infinite ease-in-out;
-            opacity: 0.2;
-        }
-
-        .particle:nth-child(1) { left: 10%; width: 8px; height: 8px; --duration: 14s; animation-delay: 0s; background: #2679b5; }
-        .particle:nth-child(2) { left: 25%; width: 6px; height: 6px; --duration: 10s; animation-delay: 2s; background: #5ba3e6; }
-        .particle:nth-child(3) { left: 45%; width: 12px; height: 12px; --duration: 16s; animation-delay: 4s; background: #2679b5; opacity: 0.1; }
-        .particle:nth-child(4) { left: 65%; width: 7px; height: 7px; --duration: 12s; animation-delay: 1s; background: #4A90D9; }
-        .particle:nth-child(5) { left: 80%; width: 9px; height: 9px; --duration: 18s; animation-delay: 3s; background: #2679b5; }
-        .particle:nth-child(6) { left: 92%; width: 5px; height: 5px; --duration: 11s; animation-delay: 5s; background: #5ba3e6; opacity: 0.3; }
-        .particle:nth-child(7) { left: 50%; width: 14px; height: 14px; --duration: 15s; animation-delay: 2.5s; background: #2679b5; opacity: 0.05; }
-
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            25% { transform: translateY(-80px) scale(1.3); opacity: 0.6; }
-            50% { transform: translateY(-160px) scale(0.8); opacity: 0.2; }
-            75% { transform: translateY(-80px) scale(1.1); opacity: 0.5; }
-        }
-
-        /* ===== ГЛАВНЫЙ КОНТЕЙНЕР ===== */
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(30, 46, 78, 0.12);
-            padding: 40px 35px;
-            transition: 0.3s;
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            animation: containerAppear 0.8s ease forwards;
-        }
-
-        @keyframes containerAppear {
-            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* ============================================ */
-        /* БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото + Заголовок)     */
-        /* ============================================ */
-        .header-grid {
-            display: flex;
-            align-items: center;
-            gap: 45px;
-            margin-bottom: 40px;
-            padding-bottom: 35px;
-            border-bottom: 2px solid #eef3f9;
-            opacity: 0;
-            animation: headerAppear 0.8s ease 0.2s forwards;
-        }
-
-        @keyframes headerAppear {
-            0% { opacity: 0; transform: translateX(-30px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-
-        .header-text {
-            flex: 1;
-        }
-
-        .header-text h1 {
-            font-size: 40px;
-            font-weight: 700;
-            color: #1a2a44;
-            line-height: 1.2;
-            margin-bottom: 6px;
-        }
-
-        .header-text h1 span {
-            background: linear-gradient(90deg, #1a2a44, #2679b5, #1a2a44, #2679b5);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmerName 5s linear infinite;
-        }
-
-        @keyframes shimmerName {
-            0% { background-position: 0% 0; }
-            100% { background-position: 300% 0; }
-        }
-
-        .header-text .subtitle {
-            font-size: 22px;
-            color: #2679b5;
-            font-weight: 500;
-        }
-
-        .header-text .badge {
-            display: inline-block;
-            margin-top: 12px;
-            background: #e9f0f9;
-            color: #1a2a44;
-            padding: 6px 22px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            animation: badgePulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); background: #e9f0f9; }
-            50% { transform: scale(1.04); background: #d4e4fa; }
-        }
-
-        /* ===== ФОТО ===== */
-        .header-photo {
-            flex-shrink: 0;
-            width: 250px;
-            height: 250px;
-            border-radius: 30px;
-            background: #d9e2ef center center / cover no-repeat;
-            box-shadow: 0 15px 35px rgba(38, 121, 181, 0.2);
-            border: 4px solid white;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-            animation: floatPhoto 4s ease-in-out infinite;
-        }
-
-        @keyframes floatPhoto {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
-        }
-
-        .header-photo:hover {
-            transform: scale(1.03) rotate(-1deg);
-            box-shadow: 0 20px 50px rgba(38, 121, 181, 0.3);
-            animation-play-state: paused;
-        }
-
-        /* ============================================ */
-        /* БЛОК 2: СПЕЦИАЛИЗАЦИЯ                       */
-        /* ============================================ */
-        .spec-section {
-            margin-bottom: 40px;
-        }
-
-        .spec-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a2a44;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .spec-grid {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .spec-item {
-            background: #f0f5fe;
-            padding: 14px 30px;
-            border-radius: 60px;
-            font-size: 17px;
-            font-weight: 600;
-            color: #1a2a44;
-            border: 1px solid transparent;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .spec-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-            animation: specFloat 3s ease-in-out infinite;
-        }
-
-        .spec-item:nth-child(1) { animation-delay: 0s; }
-        .spec-item:nth-child(2) { animation-delay: 0.5s; }
-        .spec-item:nth-child(3) { animation-delay: 1s; }
-
-        @keyframes specFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .spec-item:hover {
-            background: #2679b5;
-            color: white;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(38, 121, 181, 0.35);
-            border-color: transparent;
-            animation-play-state: paused;
-        }
-
-        /* ============================================ */
-        /* БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                 */
-        /* ============================================ */
-        .exp-section {
-            background: #f8faff;
-            border-radius: 25px;
-            padding: 30px 35px;
-            margin-bottom: 40px;
-            border-left: 6px solid #2679b5;
-            transition: box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .exp-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-            animation: expGlow 4s ease-in-out infinite;
-        }
-
-        @keyframes expGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(38, 121, 181, 0); }
-            50% { box-shadow: 0 0 30px 0 rgba(38, 121, 181, 0.05); }
-        }
-
-        .exp-section:hover {
-            box-shadow: 0 0 40px 5px rgba(38, 121, 181, 0.08);
-            animation-play-state: paused;
-        }
-
-        .exp-section h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a2a44;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .exp-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .exp-item {
-            display: flex;
-            align-items: baseline;
-            gap: 15px;
-            font-size: 16px;
-            color: #1f2b3e;
-            line-height: 1.6;
-            padding: 8px 12px;
-            border-radius: 12px;
-            transition: background 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        .exp-item.visible {
-            opacity: 1;
-            transform: translateX(0);
-            animation: itemGlow 3s ease-in-out infinite;
-        }
-
-        .exp-item:nth-child(1) { animation-delay: 0s; }
-        .exp-item:nth-child(2) { animation-delay: 0.4s; }
-        .exp-item:nth-child(3) { animation-delay: 0.8s; }
-        .exp-item:nth-child(4) { animation-delay: 1.2s; }
-
-        @keyframes itemGlow {
-            0%, 100% { background: transparent; }
-            50% { background: rgba(38, 121, 181, 0.03); }
-        }
-
-        .exp-item:hover {
-            background: rgba(38, 121, 181, 0.07);
-            transform: translateX(5px);
-            animation-play-state: paused;
-        }
-
-        .exp-item strong {
-            min-width: 140px;
-            color: #2679b5;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .exp-item .highlight {
-            background: #e3edf9;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            color: #004080;
-            transition: all 0.3s ease;
-        }
-
-        .exp-item .highlight:hover {
-            background: #2679b5;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* ============================================ */
-        /* БЛОК 4: МОЙ ПОДХОД                          */
-        /* ============================================ */
-        .approach-section {
-            background: #ffffff;
-            border-radius: 25px;
-            padding: 30px 35px;
-            box-shadow: inset 0 0 0 1px #e6edf6;
-            transition: box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .approach-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-            animation: approachPulse 4.5s ease-in-out infinite;
-        }
-
-        @keyframes approachPulse {
-            0%, 100% { box-shadow: inset 0 0 0 1px #e6edf6; }
-            50% { box-shadow: inset 0 0 0 1px #c5d9f0, 0 0 35px rgba(38, 121, 181, 0.03); }
-        }
-
-        .approach-section h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a2a44;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .approach-text {
-            font-size: 16.5px;
-            line-height: 1.9;
-            color: #1f2b3e;
-        }
-
-        .approach-text p {
-            margin-bottom: 16px;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .approach-text p.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .approach-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        .approach-text .italic-note {
-            font-style: italic;
-            color: #2679b5;
-            font-weight: 500;
-            border-left: 4px solid #2679b5;
-            padding-left: 20px;
-            margin-top: 8px;
-            animation: notePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes notePulse {
-            0%, 100% { border-left-color: #2679b5; }
-            50% { border-left-color: #5ba3e6; }
-        }
-
-        /* ============================================ */
-        /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ =====           */
-        /* ============================================ */
-
-        @media (max-width: 900px) {
-            .container {
-                padding: 30px 25px;
-            }
-            .header-text h1 {
-                font-size: 34px;
-            }
-            .header-photo {
-                width: 200px;
-                height: 200px;
-            }
-            .particles {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 12px 10px;
-            }
-
-            .container {
-                padding: 25px 18px;
-                border-radius: 24px;
-            }
-
-            .header-grid {
-                flex-direction: column-reverse;
-                align-items: center;
-                text-align: center;
-                gap: 20px;
-                padding-bottom: 25px;
-                margin-bottom: 30px;
-            }
-
-            .header-text h1 {
-                font-size: 28px;
-            }
-
-            .header-text .subtitle {
-                font-size: 18px;
-            }
-
-            .header-text .badge {
-                font-size: 13px;
-                padding: 5px 18px;
-            }
-
-            .header-photo {
-                width: 160px;
-                height: 160px;
-                border-radius: 50%;
-                box-shadow: 0 10px 25px rgba(38, 121, 181, 0.2);
-            }
-
-            .spec-grid {
-                justify-content: center;
-                gap: 10px;
-            }
-
-            .spec-item {
-                padding: 10px 22px;
-                font-size: 15px;
-                width: auto;
-            }
-
-            .exp-section {
-                padding: 22px 18px;
-                border-left-width: 4px;
-            }
-
-            .exp-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 3px;
-                font-size: 15px;
-            }
-
-            .exp-item strong {
-                min-width: auto;
-                font-size: 15px;
-            }
-
-            .approach-section {
-                padding: 22px 18px;
-            }
-
-            .approach-text {
-                font-size: 15px;
-                line-height: 1.8;
-            }
-
-            .approach-text .italic-note {
-                padding-left: 14px;
-                font-size: 15px;
-            }
-
-            .particles {
-                display: none;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .container {
-                padding: 18px 12px;
-                border-radius: 20px;
-            }
-
-            .header-text h1 {
-                font-size: 22px;
-            }
-
-            .header-text .subtitle {
-                font-size: 16px;
-            }
-
-            .header-photo {
-                width: 130px;
-                height: 130px;
-            }
-
-            .spec-item {
-                font-size: 13px;
-                padding: 8px 16px;
-            }
-
-            .exp-item {
-                font-size: 14px;
-            }
-
-            .approach-text {
-                font-size: 14px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Т-Влажнитель</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <style>
+   
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #14181f;
+      background-image: radial-gradient(circle at 20% 30%, #232b36 0%, #10141a 90%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: #e8edf5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      line-height: 1.6;
+      animation: bgPulse 12s infinite alternate ease-in-out;
+    }
+
+    @keyframes bgPulse {
+      0% { background-color: #14181f; background-image: radial-gradient(circle at 20% 30%, #232b36 0%, #10141a 90%); }
+      100% { background-color: #1c222b; background-image: radial-gradient(circle at 70% 80%, #2e3847 0%, #0e1218 90%); }
+    }
+
+    .glass-card {
+      max-width: 1100px;
+      width: 100%;
+      background: rgba(28, 34, 44, 0.70);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 3.5rem;
+      padding: 2.8rem 2.8rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      transition: all 0.3s ease;
+      animation: floatIn 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(140, 190, 255, 0.05), transparent, rgba(210, 160, 255, 0.05), transparent);
+      animation: rotateGlow 18s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes floatIn {
+      0% { opacity: 0; transform: translateY(50px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1 {
+      font-size: 3.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f2f7ff 0%, #b8cff5 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      animation: textGlow 3s infinite alternate;
+      margin-bottom: 0.5rem;
+      border-left: 4px solid #7a9cff;
+      padding-left: 1.2rem;
+      text-shadow: 0 0 20px rgba(90, 150, 255, 0.25);
+    }
+
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 8px rgba(100, 160, 255, 0.25); }
+      100% { text-shadow: 0 0 30px rgba(120, 190, 255, 0.5); }
+    }
+
+    .subhead {
+      font-size: 1.4rem;
+      color: #bcc9e0;
+      margin-bottom: 2.2rem;
+      padding-left: 1.2rem;
+      border-left: 2px solid #3e4d66;
+      animation: fadeSlide 1.5s ease;
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateX(-20px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .editable-text {
+      background: rgba(10, 14, 20, 0.30);
+      border-radius: 2rem;
+      padding: 1.6rem 2rem;
+      margin: 2rem 0 2.5rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(4px);
+      transition: all 0.3s ease;
+      animation: softPulse 4s infinite alternate;
+      font-size: 1.2rem;
+      color: #d8e2f5;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .editable-text:hover {
+      border-color: #5a7db8;
+      background: rgba(30, 42, 62, 0.5);
+      transform: scale(1.01);
+    }
+
+    @keyframes softPulse {
+      0% { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+      100% { box-shadow: 0 8px 40px rgba(80, 140, 255, 0.15); }
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 2.8rem 0 1.8rem;
+    }
+
+    .card {
+      background: rgba(32, 40, 54, 0.75);
+      backdrop-filter: blur(6px);
+      border-radius: 2.2rem;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.5);
+      animation: cardRise 1s ease both;
+      animation-delay: calc(0.1s * var(--i, 1));
+      transform-origin: bottom;
+    }
+
+    .card:nth-child(1) { --i: 1; }
+    .card:nth-child(2) { --i: 2; }
+    .card:nth-child(3) { --i: 3; }
+
+    @keyframes cardRise {
+      0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: #6a8ed6;
+      background: rgba(42, 55, 78, 0.85);
+      box-shadow: 0 20px 40px -6px #0a0e1a, 0 0 0 1px #4a6a9e inset;
+    }
+
+    .card h3 {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #d0def7;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card h3 span {
+      display: inline-block;
+      animation: iconFloat 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes iconFloat {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-8px) rotate(6deg); }
+    }
+
+    .card p {
+      color: #bbcce7;
+      font-size: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(145deg, #29364f, #161e2d);
+      border: 1px solid #4a6196;
+      color: #dce8ff;
+      padding: 0.9rem 2.6rem;
+      border-radius: 4rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      cursor: default;
+      animation: btnPulse 3s infinite alternate;
+      backdrop-filter: blur(4px);
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.06) translateY(-3px);
+      background: #293f64;
+      border-color: #7a9ee8;
+      box-shadow: 0 8px 30px rgba(80, 140, 255, 0.25);
+      color: white;
+    }
+
+    @keyframes btnPulse {
+      0% { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); }
+      100% { box-shadow: 0 6px 30px rgba(80, 140, 255, 0.25); }
+    }
+
+    .particle-ring {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 2rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: #4f72b0;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: dotWave 2.4s infinite alternate ease-in-out;
+      box-shadow: 0 0 20px #4a6db0;
+    }
+
+    .dot:nth-child(2) { animation-delay: 0.3s; background: #7899dc; }
+    .dot:nth-child(3) { animation-delay: 0.6s; background: #94b2ed; }
+    .dot:nth-child(4) { animation-delay: 0.9s; background: #6488d4; }
+    .dot:nth-child(5) { animation-delay: 1.2s; background: #4a6fb0; }
+
+    @keyframes dotWave {
+      0% { transform: translateY(0px) scale(0.8); opacity: 0.4; }
+      100% { transform: translateY(-20px) scale(1.4); opacity: 0.9; }
+    }
+
+    .footer {
+      margin-top: 2.8rem;
+      font-size: 0.9rem;
+      color: #7a8fb0;
+      border-top: 1px solid #2e3a50;
+      padding-top: 1.8rem;
+      text-align: center;
+      animation: fadeSlide 2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .footer span {
+      display: inline-block;
+      animation: sparkle 2s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0.4; text-shadow: 0 0 2px #5a7bb5; }
+      100% { opacity: 1; text-shadow: 0 0 18px #99baff; }
+    }
+
+    @media (max-width: 650px) {
+      .glass-card { padding: 2rem 1.5rem; border-radius: 2.5rem; }
+      h1 { font-size: 2.8rem; padding-left: 0.8rem; }
+      .subhead { font-size: 1.2rem; }
+    }
+
+    .glow-line {
+      height: 3px;
+      width: 100px;
+      background: linear-gradient(90deg, transparent, #6e8fd9, transparent);
+      margin: 1.2rem 0;
+      border-radius: 4px;
+      animation: lineShimmer 3s infinite;
+    }
+
+    @keyframes lineShimmer {
+      0% { opacity: 0.2; transform: scaleX(0.8); }
+      50% { opacity: 1; transform: scaleX(1.2); }
+      100% { opacity: 0.2; transform: scaleX(0.8); }
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #334b75 0%, #243855 100%);
+      padding: 0.1rem 0.6rem;
+      border-radius: 12px;
+      color: #eaf0ff;
+      transition: all 0.2s;
+      animation: highlightPulse 2s infinite alternate;
+    }
+
+    @keyframes highlightPulse {
+      0% { background: #283e62; }
+      100% { background: #3f61a0; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ===== ФОНОВЫЕ ЧАСТИЦЫ ===== -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+  <div class="glass-card">
+
+
+    <h1>Проект <br>Т-Влажнитель</h1>
+
+
+    <div class="subhead">✦Проект был создан: Москаленко Николаем и Игорем Зеньковым✦</div>
+
+
+    <div class="editable-text">
+      <span style="font-weight: 300; opacity: 0.9;">👇</span> 
+      <strong>Вы еще дышите сухим воздухом? А мы уже нет.</strong> 
+      Проект Т-Влажнитель создан по мотивам великого Т-Банка, но в отличие от банковских процентов, мы поднимаем только влажность. Наша миссия — сделать воздух влажным, а нос — счастливым. Никаких сложных схем, только любовь к людям и ультразвук. Проект создан на благо людей, чтобы вы перестали чихать и наконец-то выспались.
+      <div style="margin-top: 0.8rem; font-size: 0.95rem; color: #a2b8dd;">
+          <span class="highlight">Т-Влажнитель</span> — <span class="highlight">твоя атмосфера (буквально).</span>.
+      </div>
     </div>
 
-    <div class="container">
 
-        <!-- ========================================== -->
-        <!-- БЛОК 1: ГЛАВНЫЙ ЭКРАН (Фото справа)        -->
-        <!-- ========================================== -->
-        <div class="header-grid">
-            <div class="header-text">
-                <h1>Москаленко <span>Роман Владимирович</span></h1>
-                <div class="subtitle">Врач акушер-гинеколог, онколог</div>
-                <span class="badge">⭐ Стаж с 1997 года</span>
-            </div>
-            <div class="header-photo" 
-                 style="background-image: url('roman.jpg');">
-                 <!-- ⬆️ ЗАМЕНИ 'roman.jpg' НА СВОЙ ФАЙЛ -->
-            </div>
-        </div>
+    <div class="card-grid">
+      <div class="card">
+        <h3><span>🌀</span> Топ-3 причины купить Т-Влажнитель
 
-        <!-- ========================================== -->
-        <!-- БЛОК 2: СПЕЦИАЛИЗАЦИЯ                      -->
-        <!-- ========================================== -->
-        <div class="spec-section">
-            <div class="spec-title">▶ Специализация</div>
-            <div class="spec-grid">
-                <span class="spec-item" data-delay="0.1">Гинекология</span>
-                <span class="spec-item" data-delay="0.3">Хирургия</span>
-                <span class="spec-item" data-delay="0.5">Онкология</span>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- БЛОК 3: ОПЫТ И КВАЛИФИКАЦИЯ                -->
-        <!-- ========================================== -->
-        <div class="exp-section" id="experience">
-            <h3>▶ Опыт и квалификация</h3>
-            <div class="exp-list">
-                <div class="exp-item" data-delay="0.1">
-                    <strong>Стаж:</strong>
-                    <span>С 1997 года по настоящее время — <span class="highlight">ГКБ им. С. П. Боткина</span></span>
-                </div>
-                <div class="exp-item" data-delay="0.2">
-                    <strong>Образование:</strong>
-                    <span>Новосибирский государственный медицинский институт</span>
-                </div>
-                <div class="exp-item" data-delay="0.3">
-                    <strong>Спец. подготовка:</strong>
-                    <span>Ординатура по акушерству и гинекологии (г. Москва); Академия последипломного образования (кафедра под рук. профессора Бакулевой Л. П.)</span>
-                </div>
-                <div class="exp-item" data-delay="0.4">
-                    <strong>Международный опыт:</strong>
-                    <span>Стажировка во Франции (г. Клермон-Ферран), клиника CICE, под руководством профессора Бочоришвили Р. Г.</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- БЛОК 4: МОЙ ПОДХОД                         -->
-        <!-- ========================================== -->
-        <div class="approach-section" id="approach">
-            <h3>▶ Мой подход</h3>
-            <div class="approach-text">
-                <p>
-                    Как врач и как человек, я глубоко понимаю деликатность вопросов, с которыми сталкиваются мои пациенты. 
-                    Мой многолетний опыт и принципы медицинской этики диктуют одно главное правило: <strong>предельная осторожность и чуткость</strong>.
-                </p>
-                <p>
-                    Я сознательно не использую на сайте сложную медицинскую терминологию, которая может вызвать тревогу. 
-                    Моя задача — обеспечить всеобъемлющую помощь, опираясь на современные технологии и достижения медицины, 
-                    сохраняя при этом комфортную атмосферу для пациента.
-                </p>
-                <p class="italic-note">
-                    «Все важные детали, нюансы диагноза и план лечения — это то, что должно оставаться в пространстве доверия 
-                    между врачом и пациентом. Мы обсудим всё необходимое лично, на приёме или в удобном для вас формате общения».
-                </p>
-            </div>
-        </div>
-
+</h3>
+        <p>Здоровье: Меньше бактерий и пыли в воздухе — меньше болеть.
+Красота: Кожа сияет, волосы не электризуются, даже зимой.
+Уют: Дышать легко, спать крепко, жить комфортно.
+</p>
+        <div class="glow-line"></div>
+        <small style="color: #7894c9;">✨ И самое главное: у Т-Влажнителя на логтипе очень красивый человек</small>
+      </div>
+      <div class="card">
+        <h3><span>⚡</span> Спаси свои растения (и себя)</h3>
+        <p>Твои цветы желтеют, а ты сам чувствуешь усталость? Это воздух слишком сухой. Т-Влажнитель работает как персональный климат-контроль: увлажняет всё вокруг, от фикуса до твоих легких. Без шума, без сложных настроек, просто включаешь и забываешь. </p>
+        <div class="glow-line"></div>
+        <small style="color: #7894c9;">🔥 Сделано для людей, работает для природы.</small>
+      </div>
+      <div class="card">
+        <h3><span>🌙</span> Дыши, а не хрипи</h3>
+        <p>Сухой воздух — это враг номер один для твоего носа, горла и вечно трескающихся губ. Т-Влажнитель превращает твою комнату из пустыни Сахара в оазис. С ним ты перестанешь просыпаться с комком в горле и начнешь дышать полной грудью.</p>
+        <div class="glow-line"></div>
+        <small style="color: #7894c9;">🪐 Влажность под контролем — здоровье в порядке.</small>
+      </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- ===== СКРИПТ ДЛЯ АНИМАЦИЙ ПРИ СКРОЛЛЕ ===== -->
-    <!-- ========================================== -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <!-- 5. ДЕКОРАТИВНЫЕ ТОЧКИ (без текста) -->
+    <div class="particle-ring">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
 
-            function isElementInViewport(el) {
-                const rect = el.getBoundingClientRect();
-                const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-                return rect.top <= windowHeight - 80;
-            }
+    
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+      <span class="btn">✦ Покупайте Т-Влажнитель</span>
+      <span style="color: #7f99cc; font-size: 0.95rem; letter-spacing: 0.3px;">
+        ↳ Данный сайт не является публичной оффертой
+      </span>
+    </div>
 
-            function animateOnScroll() {
-                // Специализация
-                document.querySelectorAll('.spec-item').forEach(function(el) {
-                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
-                        el.classList.add('visible');
-                    }
-                });
 
-                // Опыт
-                document.querySelectorAll('.exp-section').forEach(function(el) {
-                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
-                        el.classList.add('visible');
-                    }
-                });
+    <div class="footer">
+      <span>⏺</span>  Благодарим вас за внимание  <span>⏺</span>
+    </div>
 
-                document.querySelectorAll('.exp-item').forEach(function(el) {
-                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
-                        el.classList.add('visible');
-                    }
-                });
-
-                // Подход
-                document.querySelectorAll('.approach-section').forEach(function(el) {
-                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
-                        el.classList.add('visible');
-                    }
-                });
-
-                document.querySelectorAll('.approach-text p').forEach(function(el) {
-                    if (isElementInViewport(el) && !el.classList.contains('visible')) {
-                        el.classList.add('visible');
-                    }
-                });
-            }
-
-            animateOnScroll();
-            window.addEventListener('scroll', animateOnScroll);
-            window.addEventListener('resize', animateOnScroll);
-
-        });
-    </script>
-
+    <div style="margin-top: 1.2rem; font-size: 0.8rem; color: #4a5f82; text-align: right; border-top: 1px dashed #31415a; padding-top: 1rem; opacity: 0.8;">
+      ✎ Цена всего 6767рублей
+    </div>
+  </div>
 </body>
 </html>
